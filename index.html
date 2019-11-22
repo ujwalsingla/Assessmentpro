@@ -107,10 +107,7 @@ function getsong()
 		divv.appendChild(artist);
 		divv.appendChild(duration);
 		document.getElementById("d").appendChild(divv);
-		divv.setAttribute("position","relative");
-		divv.setAttribute("width","30%");
 		img.setAttribute("src",data.data[i].album.cover_medium);
-		img.setAttribute("float","left")
 		title.innerHTML="TITLE="+data.data[i].title
 		duration.innerHTML="DURATION="+data.data[i].duration+"sec"
 		artist.innerHTML="ARTIST="+data.data[i].artist.name
@@ -158,10 +155,7 @@ function getsss(a)
 				divv.appendChild(img);
 				divv.appendChild(title);
 				document.getElementById("d").appendChild(divv);
-				divv.setAttribute("position","relative");
-				divv.setAttribute("width","30%");
 				img.setAttribute("src",ans.response.songs[i].header_image_url);
-				img.setAttribute("float","left")
 				title.innerHTML="TITLE="+ans.response.songs[i].title;
 			}
 		}
