@@ -1,0 +1,175 @@
+﻿
+  <!DOCTYPE html>
+<html>
+<head>
+<style>
+#d img
+{
+   height:300px;
+   width:300px;
+  
+}
+#d
+{
+          text-align: center;
+
+}
+</style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>MUSIfy</title>
+
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/slider.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body >
+
+
+<div class="d-flex flex-column flex-md-row p-3 bottom shadow-sm">
+      <h3 class="mr-md-auto">Musify</h3>
+       <nav class="my-2 my-md-0 mr-md-3">
+      <a class=" btn btn-outline-primary" href="signup.html">Sign up</a>
+ <a class=" btn btn-outline-primary" href="log.html">Log in</a>
+    </nav></div>
+	<center>
+
+<div class="container">  
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="la.jpg" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="chicago.jpg" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="ny.jpg" alt="New york" style="width:100%;">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+	<h1 style="transform:translate(-20px,-450px);color:white";>Search Track </h1>
+	<input id="song" type="text" style="float:left;border:solid white;transform:translate(500px,-450px);background-color:Transparent;color:white;" placeholder="Enter song"/>
+	<button id="sea" onClick=getsong() style="transform:translate(-10px,-450px);">SEARCH TRACK</button>
+	<input id="son" type="text" style="float:left;border:solid white;transform:translate(320px,-400px);background-color:Transparent;color:white;" placeholder="Enter artist"/>
+	<button id="se" onClick=getbyartist() style="transform:translate(-140px,-400px);">SEARCH BY ARTIST</button>
+	</center>
+	<div id="d"></div>
+</body>
+<script>
+function getsong()
+{
+	document.getElementById("d").innerHTML="";
+	var sea=document.getElementById("sea");
+	var song=document.getElementById("song").value;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     var data=JSON.parse(this.responseText);
+	console.log(data);
+	for(var i=0;i<6;i++)
+	{
+		var divv=document.createElement("div");
+		var img=document.createElement("img");
+		var title=document.createElement("p");
+		var artist=document.createElement("p");
+		var duration=document.createElement("p");
+		divv.appendChild(img);
+		divv.appendChild(title);
+		divv.appendChild(artist);
+		divv.appendChild(duration);
+		document.getElementById("d").appendChild(divv);
+		divv.setAttribute("position","relative");
+		divv.setAttribute("width","30%");
+		img.setAttribute("src",data.data[i].album.cover_medium);
+		img.setAttribute("float","left")
+		title.innerHTML="TITLE="+data.data[i].title
+		duration.innerHTML="DURATION="+data.data[i].duration+"sec"
+		artist.innerHTML="ARTIST="+data.data[i].artist.name
+	}
+	
+    }
+  };
+  xhttp.open("GET", "https://deezerdevs-deezer.p.rapidapi.com/search?q="+song, true);
+  xhttp.setRequestHeader("x-rapidapi-host", "deezerdevs-deezer.p.rapidapi.com");
+xhttp.setRequestHeader("x-rapidapi-key", "a03189d857msh65a222bb2c25613p163acdjsnf9fcfeb8b74c");
+  xhttp.send();
+}
+function getbyartist()
+{
+	document.getElementById("d").innerHTML="";
+	var se=document.getElementById("se");
+	var son=document.getElementById("son").value;
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange= function () 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			var a=JSON.parse(this.responseText);
+			getsss(a.response.hits[0].result.primary_artist.id)
+		}
+	};
+	xhr.open("GET", "https://genius.p.rapidapi.com/search?q="+son);
+	xhr.setRequestHeader("x-rapidapi-host", "genius.p.rapidapi.com");
+	xhr.setRequestHeader("x-rapidapi-key", "a03189d857msh65a222bb2c25613p163acdjsnf9fcfeb8b74c");
+	xhr.send();
+}
+function getsss(a)
+{
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange=function () 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			var ans=JSON.parse(this.responseText);
+			for(var i=0;i<6;i++)
+			{			
+				var divv=document.createElement("div");
+				var img=document.createElement("img");
+				var title=document.createElement("p");
+				divv.appendChild(img);
+				divv.appendChild(title);
+				document.getElementById("d").appendChild(divv);
+				divv.setAttribute("position","relative");
+				divv.setAttribute("width","30%");
+				img.setAttribute("src",ans.response.songs[i].header_image_url);
+				img.setAttribute("float","left")
+				title.innerHTML="TITLE="+ans.response.songs[i].title;
+			}
+		}
+	};
+	xhr.open("GET", "https://genius.p.rapidapi.com/artists/"+a+"/songs");
+	xhr.setRequestHeader("x-rapidapi-host", "genius.p.rapidapi.com");
+	xhr.setRequestHeader("x-rapidapi-key", "a03189d857msh65a222bb2c25613p163acdjsnf9fcfeb8b74c");
+	xhr.send()
+}
+</script>
+</html>
