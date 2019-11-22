@@ -5,6 +5,7 @@ ABOUT -
 Earbender is a music platform that allows users to find details about his favourite music and their favourite artists.
 
 Features 
+
          -Any track can be searched by name 
          -It covers both national as well as international artists and their tracks.
          -All songs of an artist can be searched through the Artist's name.
